@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="content">
+    <div class="form" id="form">
+    <h3>Login</h3>
+    {% load static %}
+    <img src="{% static 'images/human_ic.png' %}">
+        <form action="list" method="post" onsubmit="return validation(this)" name="loginForm" id="loginForm">
+            {% csrf_token %}
+            <div class="input-icons"> 
+                <i class="fa fa-at icon"></i>  
+                <input type="text" name="email" id="email" placeholder="Email"> 
+            </div>
+
+            <div class="input-icons"> 
+                <i class="fa fa-lock  icon"> </i> 
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div> 
+        
+                <input type="submit" id="submit" name="login" >
+            
+        </form>
+    </div>
+
+
+    <div>
+        {% if messages %}
+        {% for message in messages %}
+        <h2> {{ message}}</h2>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

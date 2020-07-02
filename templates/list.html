@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div id="content">
+        <h5>
+            welcome {{user}}
+        </h5>
+        <h2>
+            Employee List
+        </h2>
+        <div class="input-icons"> 
+            <i class="fa fa-search icon"> 
+          </i> 
+            <input type="text" id="search-box" onkeyup="searchQuery()" placeholder="search...">
+        </div> 
+        
+        <div style="overflow-x:auto;">
+        <table id="list" >
+            <thead>
+                <tr>
+                    <th>Employee Id</th>
+                    <th>Name</th>
+                    <th>Email Id</th>
+                    <th>Joining date</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+             <tbody id="tableBody">
+            
+            </tbody>    
+        </table>
+        </div>
+    </div>
+    {% csrf_token %}
+    <script type="text/javascript">
+        var listArray = JSON.parse('{{list_json|safe}}');
+        plotTable(listArray);
+        
+        document.querySelectorAll('#list th').forEach(headerCell => {
+            headerCell.addEventListener("click", () => {
+                tableElement = headerCell.parentElement.parentElement.parentElement;
+                headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);                    
+                IsAsc = headerCell.classList.contains("th-sort-asc");
+        
+                sortList(tableElement, headerIndex, !IsAsc);
+            });
+        });
+                
+        function plotTable(listArray){
+            var table = document.getElementById('tableBody');
+            table.innerHTML = '';
+		    for (var i = 0; i < listArray.length; i++){
+                var row = `<tr>
+                                <td>${listArray[i].id}</td>
+                                <td>${listArray[i].ename}</td>
+                                <td>${listArray[i].email_id}</td>
+                                <td>${listArray[i].joining_date}</td>
+                                <td>${listArray[i].location}</td> 
+                        </tr>`
+                table.innerHTML += row;
+        }
+
+        }
+
+        $('#list').on('click', 'tr', function() {
+            var tableData = $(this).children("td").map(function() {
+                return $(this).text();
+            }).get();
+            if(tableData[0] != undefined){
+                $.ajax({
+                    type:'POST',
+                    url:'detail',
+                    data:{
+                        user:'{{user}}',
+                        id : tableData[0],
+                        ename : tableData[1],
+                        email_id : tableData[2],
+                        joining_date : tableData[3],
+                        location : tableData[4],
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success:function(data){
+                        $('#content').replaceWith(data);
+                    }
+                });
+            }
+            
+        });
+
+        function sortList(table, column, asc = true){
+            tableBody = table.tBodies[0];
+            rows = Array.from(tableBody.querySelectorAll('tr'));
+            direction = asc ? 1 : -1;
+            
+            sortedRows = rows.sort((a, b) => {
+                aSelectedCol = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+                bSelectedCol = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
+
+                console.log();
+                return aSelectedCol > bSelectedCol ? (1 * direction): (-1 * direction);
+
+            });
+            
+            while(tableBody.firstChild){
+                tableBody.removeChild(tableBody.firstChild);
+            }
+
+            tableBody.append(...sortedRows);
+
+            table.querySelectorAll('th').forEach(th => th.classList.remove('th-sort-asc','th-sort-desc'));
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle('th-sort-asc', asc);
+            table.querySelector(`th:nth-child(${column + 1})`).classList.toggle('th-sort-desc', !asc);
+
+        }
+
+        function searchQuery() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search-box");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tableBody");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                tdId = tr[i].getElementsByTagName("td")[0];
+                tdName = tr[i].getElementsByTagName("td")[1];
+                tdEmail = tr[i].getElementsByTagName("td")[2];
+                tdJoiningDate = tr[i].getElementsByTagName("td")[3];
+                tdLocation = tr[i].getElementsByTagName("td")[4];
+
+                patternMatch = 0;
+
+                if (tdId) {
+                    txtValue = tdId.textContent || tdId.innerText ;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        //tr[i].style.display = "";
+                        patternMatch += 1;
+                        console.log(tdId ,patternMatch)
+                    }
+                }
+
+                if (tdName) {
+                    txtValue = tdName.textContent || tdName.innerText ;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        //tr[i].style.display = "";
+                        patternMatch += 1;
+                        console.log(tdName ,patternMatch)
+                    }
+                }
+                if (tdEmail) {
+                    txtValue = tdEmail.textContent || tdEmail.innerText ;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        //tr[i].style.display = "";
+                        patternMatch += 1;
+                        console.log(tdEmail ,patternMatch)
+                    }
+                }
+                if (tdJoiningDate) {
+                    txtValue = tdJoiningDate.textContent || tdJoiningDate.innerText ;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        //tr[i].style.display = "";
+                        patternMatch += 1;
+                        console.log(tdJoiningDate ,patternMatch)
+                    }
+                }
+                if (tdLocation) {
+                    txtValue = tdLocation.textContent || tdLocation.innerText ;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        //tr[i].style.display = "";
+                        patternMatch += 1;
+                        console.log(tdLocation ,patternMatch)  
+                    }
+                }
+
+
+                if(patternMatch >= 1){
+                    tr[i].style.display = "";
+                    console.log(tr ,patternMatch,"lastcheck")
+                }else{
+                    tr[i].style.display = "none";
+                }
+                
+            }
+          }
+
+        
+    </script>
+
+{% endblock %}

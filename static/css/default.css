@@ -1,0 +1,176 @@
+*{
+  font-family:'Comfortaa';
+  box-sizing: border-box;
+}
+body {
+  background-color: #3aafa9;
+  width: 100%;
+  margin: 0px;
+  padding-bottom: 20px;
+  }
+
+.appname {
+  padding: 30px;
+  text-align: center;
+  background: white;
+  color: #17252a;
+}
+
+h1 {
+    color:#17252a;   
+  }
+
+h2{
+  color: #ffffff;
+  text-align: center;
+  }
+
+h5{
+  color: #ffffff;
+  text-align: center;
+}
+
+.form{
+  background-color:#def2f1;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 10px #3b3b3f;
+  width: fit-content;
+  margin-top: 20px;
+
+}
+
+input[type=text],input[type=password] {
+    background-color:#ffffff ;
+    width: 200px;
+    padding: 10px;
+    padding-left: 40px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border:1px;
+    box-shadow: 4px 4px 10px #3b3b3f;
+    color: black;
+    text-align: center;
+}
+
+input[type=submit] {
+    background-color:#2b7a78 ;
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 8px 0;
+    margin-top: 20px;
+    display: inline-block;
+    border-radius: 6px;
+    border: 0px;
+    color: white;
+    box-shadow: 4px 4px 10px #3b3b3f;
+}
+
+.input-icons i { 
+  position: absolute;
+} 
+.input-icons { 
+  width: 100%; 
+  margin-bottom: 10px; 
+} 
+
+.icon { 
+  padding: 10px; 
+  color: gray; 
+  min-width: 50px; 
+  text-align: center; 
+  margin: 8px 0;
+} 
+
+#list{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+#list td, #list th {
+  padding: 8px;
+  background-color: #def2f1;
+}
+
+#list tr:hover {
+  color: #3aafa9;
+  cursor: pointer;
+}
+
+#list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #2b7a78;
+  color: white;
+  cursor: pointer;
+}
+#list .th-sort-asc::after {
+  content: " \25b4";
+}
+
+#list .th-sort-desc::after {
+  content: " \25be";
+}
+
+#list .th-sort-asc,
+#list .th-sort-desc{
+  background-color: #34928f;
+}
+
+#content{
+  display: block;
+  width: 100%;
+}
+
+#btn{
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#container{
+  background: white;
+  width: 80%;
+  border-radius: 6px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#img{
+  float: left;
+}
+
+#info{
+  width: max-content;
+}
+
+
+#column {
+  float: left;
+  width: max-content;
+  padding: 15px;
+  overflow-x:auto;
+}
+
+#columnb {
+  float: left;
+  width: max-content;
+  padding: 15px;
+  font-weight: bold;
+}
+
+#row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width:600px) {
+  #column {
+    width: 100%;
+  }
+}

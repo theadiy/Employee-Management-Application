@@ -1,0 +1,76 @@
+{% load static %}
+<link rel='stylesheet' href="{% static 'css/default.css' %}">
+<h2>Details</h2>
+<div id="content">
+<div id="container" style="overflow-x:auto;">
+    <div id="column">
+        {% load static %}
+        <img src="{% static 'images/human_ic.png' %}"></img>
+    </div>
+    <div id="column">
+        <div id="row"> 
+            <div id="columnb">
+                Employee Id : 
+            </div> 
+            <div id="column">
+                {{employee.id}}
+            </div>
+        </div>
+        <div id="row"> 
+            <div id="columnb">
+                Name : 
+            </div> 
+            <div id="column">
+                {{employee.ename}}
+            </div>
+        </div>
+        <div id="row"> 
+            <div id="columnb">
+                E-mail : 
+            </div> 
+            <div id="column"> 
+                {{employee.email_id}}
+            </div>
+        </div>
+        <div id="row"> 
+            <div id="columnb">
+                Joining date : 
+            </div> 
+            <div id="column"> 
+                {{employee.joining_date}}
+            </div>
+        </div>
+        <div id="row"> 
+            <div id="columnb">
+                Location : 
+            </div> 
+            <div id="column"> 
+                {{employee.location}}
+            </div>
+        </div>
+    </div>
+    
+</div>
+<button id="btn" onclick="backToList()">Back</button>
+<script type="text/javascript">
+    function backToList(){
+        $.ajax({
+            type:'POST',
+            url:'list',
+            data:{
+                email:'{{user}}',
+                flag:'back',
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data){
+               //$().replaceWith(data);
+               document.open("text/html", "replace");
+               document.write(data);
+               document.close();
+               //console.log(data);
+               // $('#content').replaceWith(data);
+            }
+            });
+    }
+</script>
+</div>
