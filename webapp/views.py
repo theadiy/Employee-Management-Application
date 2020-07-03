@@ -28,7 +28,7 @@ def list(request):
         list_json = json.dumps(emp_list, default = lambda x: x.__dict__)
 
         if 'email' in request.POST and 'password' in request.POST :
-            email = request.POST.get('email')
+            email = request.POST.get('email').strip()
             password = request.POST.get('password')
             if email == 'admin@mail.com' and password == '123':
                 return render(request,'list.html',{'list_json':list_json,'user':email})

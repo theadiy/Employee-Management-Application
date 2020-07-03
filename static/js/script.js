@@ -28,36 +28,35 @@ function validEmail(emailInputText){
 /** Validate email and password on sumbit & request to server */
 function validation(){
     var emailInputText = $('#email').val().trim;
-        var passwordInputText =$('#password').val().trim();
-        var emailValidationSuccessfull = false;
-        var passwordValidationSuccessfull = false;
-        if(emailInputText=="" || !validEmail(emailInputText)){
-            console.log(emailInputText=="");
-            console.log(emailInputText.val());
-            console.log(!validEmail(emailInputText));
-            document.getElementById('email').style.border = "solid 1px red";
-            emailValidationSuccessfull = false;
-        }else{
-            document.getElementById('email').style.border = 'solid 1px white';
-            emailValidationSuccessfull = true;
-        }
-        if(passwordInputText==""){
-            document.getElementById('password').style.border = "solid 1px red";
-            passwordValidationSuccessfull = false;
-        }else{
-            document.getElementById('password').style.border = 'solid 1px white';
-            passwordValidationSuccessfull = true;
-        }
-        if(emailValidationSuccessfull && passwordValidationSuccessfull){
-        
-            $.ajax({
+    var passwordInputText =$('#password').val().trim();
+    var emailValidationSuccessfull = false;
+    var passwordValidationSuccessfull = false;
+    if(emailInputText=="" || !validEmail(emailInputText)){
+        console.log(emailInputText=="");
+        console.log(emailInputText.val());
+        console.log(!validEmail(emailInputText));
+        document.getElementById('email').style.border = "solid 1px red";
+        emailValidationSuccessfull = false;
+    }else{
+        document.getElementById('email').style.border = 'solid 1px white';
+        emailValidationSuccessfull = true;
+    }
+    if(passwordInputText==""){
+        document.getElementById('password').style.border = "solid 1px red";
+        passwordValidationSuccessfull = false;
+    }else{
+        document.getElementById('password').style.border = 'solid 1px white';
+        passwordValidationSuccessfull = true;
+    }
+    if(emailValidationSuccessfull && passwordValidationSuccessfull){
+        $.ajax({
             type:'POST',
             url:'list',
             data:{
                 email:$('#email').val().trim(),
                 password:$('#password').val().trim(),
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
+                },
             success:function(data){
                 console.log(data)
                 //$('#content').replaceWith(data);
@@ -66,11 +65,11 @@ function validation(){
                 list.document.write(data);
                 list.document.close();
             }
-            });
-            return true;
-        }else{
-            return false;
-        }
+        });
+        return true;
+    }else{
+        return false;
+    }
 }
 
 
