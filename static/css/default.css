@@ -41,16 +41,16 @@ h5{
 }
 
 input[type=text],input[type=password] {
-    background-color:#ffffff ;
-    width: 200px;
-    padding: 10px;
-    padding-left: 40px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border:1px;
-    box-shadow: 4px 4px 10px #3b3b3f;
-    color: black;
-    text-align: center;
+  background-color:#ffffff ;
+  width: 200px;
+  padding: 10px;
+  padding-left: 30px;
+  margin: 8px;
+  border-radius: 6px;
+  border:1px;
+  box-shadow: 4px 4px 10px #3b3b3f;
+  color: black;
+  text-align: center;
 }
 
 input[type=submit] {
@@ -148,7 +148,6 @@ input[type=submit] {
   width: max-content;
 }
 
-
 #column {
   float: left;
   width: max-content;
@@ -169,8 +168,50 @@ input[type=submit] {
   clear: both;
 }
 
+#toast{
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: rgba(0, 0, 0, 0.705);
+  color: #ffffff;
+  text-align: center;
+  border-radius: 6px;
+  z-index: 1;
+  bottom: 20px; 
+  position: fixed;
+  left: 50%; 
+  padding: 16px;
+}
+
+#toast.show{
+  visibility: visible;
+  -webkit-animation: fadein 0.25, fadeout 0.5s 2.5s;
+  animation: fadein 0.25, fadeout 0.5s 2.5s;
+}
+
+
 @media screen and (max-width:600px) {
   #column {
     width: 100%;
   }
+}
+
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }

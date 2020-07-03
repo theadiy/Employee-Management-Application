@@ -27,11 +27,15 @@
 
     <div>
         {% if messages %}
+        
         {% for message in messages %}
-        <h2> {{ message}}</h2>
+        <div id="toast">{{ message}}</div>
+        <script> showToast()</script>
         {% endfor %}
         {% endif %}
     </div>
+
+    
 </div>
 
 {% endblock %}
