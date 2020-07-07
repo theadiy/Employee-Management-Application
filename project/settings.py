@@ -21,7 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-#SECRET_KEY = 'xf=!&y_cd(0oxm#s^j)o*z-m0r_pz9x@l!#_^a%+w0kv705x4^'
 with open('project/secret_key.txt') as f:
     SECRET_KEY = f.read().strip()
 
@@ -29,7 +28,7 @@ with open('project/secret_key.txt') as f:
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'f5be204f74b9.ngrok.io',
+    '876b87db4f80.ngrok.io',
     '127.0.0.1'
 ]
 

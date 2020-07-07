@@ -3,11 +3,13 @@
 {% block content %}
 
 <div id="content">
+    
     <div class="form" id="form">
     <h3>Login</h3>
     {% load static %}
+    
     <img src="{% static 'images/human_ic.png' %}">
-        <form action="list" method="post" onsubmit="return validation(this)" name="loginForm" id="loginForm">
+        <form action="list" method="post" onsubmit="return submit()" name="loginForm" id="loginForm">
             {% csrf_token %}
             <div class="input-icons"> 
                 <i class="fa fa-at icon"></i>  
@@ -19,7 +21,7 @@
                 <input type="password" name="password" id="password" placeholder="Password">
             </div> 
         
-                <input type="submit" id="submit" name="login" >
+                <input type="submit" id="login" name="login" value="login" >
             
         </form>
     </div>
@@ -30,12 +32,102 @@
         
         {% for message in messages %}
         <div id="toast">{{ message}}</div>
-        <script> showToast()</script>
+        <script> 
+            showToast();
+        </script>
         {% endfor %}
         {% endif %}
     </div>
 
     
 </div>
+<script>
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var loginButton = document.getElementById("login");
+        loginButton.disabled = true;
+
+        var emailInputText = document.getElementById("email");
+        var passwordInputText = document.getElementById("password");
+
+        var emailIsNull = true;
+        var passwordIsNull = true;
+
+        /* email blank value check */
+        emailInputText.addEventListener('input',function(event){
+            if(emailInputText.value != ""){
+                emailIsNull = false;
+            }else{
+                emailIsNull = true;
+            }
+            if(!emailIsNull && !passwordIsNull){
+                enableLoginButton();
+            }
+        });
+
+        /* password blank value check */
+        passwordInputText.addEventListener('input',function(event){
+            if(passwordInputText.value != ""){
+                passwordIsNull = false;
+            }else{
+                passwordIsNull = true;
+            }
+            if(!emailIsNull && !passwordIsNull){
+                enableLoginButton();
+            }
+        });
+
+        /* enable login button */
+        function enableLoginButton(){
+            loginButton.disabled = false;
+        }
+
+        /* email format error  */
+        document.addEventListener("click", function(event){
+            if(event.target.id != "email"){
+                if(emailInputText.value!="" && !validEmail(emailInputText.value)){
+                    document.getElementById('email').style.border = "solid 1px red";
+                }else if(emailInputText.value!="" && validEmail(emailInputText.value)){
+                    document.getElementById('email').style.border = 'solid 1px white';
+                }     
+            }else{
+                document.getElementById('email').style.border = 'solid 1px white';
+            }
+
+        });
+          
+        /* Validate email format */
+        function validEmail(email){
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
+                return (true)
+            }
+            return (false)
+        }
+
+        /*request to server */
+        function submit(){
+            
+            $.ajax({
+                type:'POST',
+                url:'list',
+                data:{
+                    email:$('#email').val().trim(),
+                    password:$('#password').val().trim(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){
+                    console.log(data)
+                    //$('#content').replaceWith(data);
+                    var list = window.open('list');
+                    list.document.open();
+                    list.document.write(data);
+                    list.document.close();
+                }
+            });    
+            
+        }
+    });
+
+</script>
 
 {% endblock %}
